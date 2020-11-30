@@ -1,0 +1,132 @@
+//=======================================//
+//Script Made by: Nekodoll 30/11/2020 - Version 1
+//
+//=======================================//
+
+using System;
+using FaucetCollector.Script;
+
+public class dogestarscript : FaucetScript
+{
+	public override FaucetSettings Settings
+    {
+        get
+        {
+            return new FaucetSettings("https://dogestar.website/")
+            {
+                 new FaucetSetting {
+                    Name = "Doge",
+                    Display = "FaucetPay linked Doge wallet address",
+                    Type = EditorType.Wallet,
+                    Required = true,
+                    Default = null
+                },
+                
+
+            };
+        }
+    }
+	
+	 public override void Start()
+    {
+        
+        Title = "✰DogeStar✰";
+
+        SuccessXPath = "//*";
+        FailXPath = "//DIV[@class='alert alert-danger'][text()='Invalid captcha code']";
+        base.Start();
+    }
+	 
+    public override bool IsLoggedIn()
+    {
+
+       
+        return true;
+    }
+
+    
+    public override int BeforeLogin()
+    {
+       
+
+        return base.BeforeLogin();
+    }
+
+   
+    public override int DoLogin()
+    {
+       
+        return base.DoLogin();
+    }
+
+   
+    public override int AfterLogin()
+    {
+        
+        return base.AfterLogin();
+    }
+	
+	 public override int GetFaucetWaitTime()
+    {
+
+        return base.GetFaucetWaitTime();
+    }
+	
+	public override int BeforeSolveCaptcha()
+    {
+
+        
+        return base.BeforeSolveCaptcha();
+    }
+
+   
+     public override int DoSolveCaptcha()
+    {
+        
+        return base.DoSolveCaptcha();
+    }
+
+    
+    public override int AfterSolveCaptcha()
+    {
+        
+        return base.AfterSolveCaptcha();
+    }
+	public override int BeforeSolveFaucet()
+    {
+
+		SetText(ElementByClass("form-control") , GetSetting("Doge"));
+		
+
+        return base.BeforeSolveFaucet();
+    }
+	public override int DoSolveFaucet()
+    {
+        SolveCaptcha();
+        Wait();
+        Click(ElementByXPath("//input[@value='Get reward!']"));
+		
+        
+        
+        return base.DoSolveFaucet();
+    }
+	   public override int AfterSolveFaucet()
+    {
+
+		
+        return base.AfterSolveFaucet();
+    }
+
+    public override int CheckFaucetResult()
+    {
+ 
+        var result = base.CheckFaucetResult();
+
+        if (IsSuccess)
+        {
+           result = GetWaitSetting();
+        }
+
+        return result;
+    }
+}
